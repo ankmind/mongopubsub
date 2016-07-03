@@ -37,7 +37,7 @@ function pushCollectionForTailing(collectionName){
   updateDataBase(collectionName); 
   myarr.push(database+collectionName);
   if(localdb!=null){
-    startTailingOplog(localdb);
+    startTailingOplog(localdb,myarr);
     console.log("collection added for tailing successfull");
   }
   else{

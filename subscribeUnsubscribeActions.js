@@ -5,25 +5,28 @@ var dataidmap="hashmap_dataid_key";
 
 
 function validateAndSubscribe(userid,dataid,db){
-	var res=dataid.split(".");
-	var collectionid=res[0];
-	var documentid =res[1]; 
-	var fieldid    =res[2];
+	var res1=dataid.split(".");
+	var collectionid=res1[0];
+	var documentid =res1[1]; 
+	var fieldid    =res1[2];
 
-  db.collection(useridmap).find({"_id":userid}).toArray(function(err,res){
-    if(!err && res)
+  db.collection(useridmap).find({"_id":userid},function(err,res2){
+    res2.toArray(function(err,res3){
+    if(!err && res3!=null && res3[0])
     {
-     for(i=0;i<res[0].array.length;i++){
-      if(res[0].array[i]==collectionid || res[0].array[i]==(collectionid+"."+
-       documentid) || res[0].array[i]==dataid){
+     for(i=0;i<res3[0].array.length;i++){
+      if(res3[0].array[i]==collectionid || res3[0].array[i]==(collectionid+"."+
+       documentid) || res3[0].array[i]==dataid){
        console.log("already subscribed");
      return;
    }
- }
-}
-tail.pushCollectionForTailing(collectionid);
-subscribe(userid,dataid,db);
-});
+  }
+ } 
+ tail.pushCollectionForTailing(collectionid);
+ subscribe(userid,dataid,db);
+ });
+  });
+
 }	
 
 
